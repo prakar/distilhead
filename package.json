@@ -1,0 +1,8 @@
+{
+  "name": "distilhead-tools",
+  "private": true,
+  "type": "module",
+  "dependencies": {
+    "llm-model-resolver": "github:prakar/llm-model-resolver"
+  }
+}

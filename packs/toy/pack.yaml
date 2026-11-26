@@ -1,0 +1,38 @@
+schema_version: 1
+pack: {id: toy, version: 0.1.0, licence: MIT}
+dimensions:
+  - {id: sentiment, definition: "Overall feeling expressed by the passage.", label_set: polar}
+  - {id: urgency, definition: "How time-pressing the passage is.", label_set: level}
+label_sets:
+  polar:
+    kind: categorical
+    labels: [negative, neutral, positive]
+    abstain: neutral
+    polarity: {opposed: [[negative], [positive]]}
+  level:
+    kind: ordinal
+    labels: [low, medium, high]
+    abstain: low
+    polarity: {opposed: [[low], [high]]}
+teacher:
+  prompt_file: prompt.md
+  prompt_version: "0.1"
+  evidence_quote: required
+  providers: [gemini]
+  profile: economy
+  cap_usd: 5
+files:
+  corpus: corpus.yaml
+  heldout: heldout.yaml
+  reference: reference.jsonl
+  locks: locks.yaml
+  prototypes: prototypes.yaml
+  bar: bar.yaml
+  denylist: denylist.txt
+encoder:
+  id: toy/placeholder-encoder
+  revision: "0000000000000000000000000000000000000000"
+  sha256: "0000000000000000000000000000000000000000000000000000000000000000"
+  max_len: 128
+  pooling: mean
+head: {type: logreg, class_weight: balanced, seed: 0, c_grid: [0.1, 1.0, 10.0]}
