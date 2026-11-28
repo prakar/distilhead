@@ -57,7 +57,9 @@ class GeminiClient:
 
         self._types = types
         self._model = model
-        self._client = genai.Client(api_key=api_key)
+        self._client = genai.Client(
+            api_key=api_key, http_options=types.HttpOptions(api_version="v1beta")
+        )
 
     def generate(self, system: str, user: str, max_out: int) -> Reply:
         t = self._types

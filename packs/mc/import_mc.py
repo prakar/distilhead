@@ -105,7 +105,12 @@ pack = {
             "quote_key": "evidence_quote",
         },
         "demote": [
-            {"from_label": "reduces", "field": "voice", "equals": "reported", "to_label": "implicit"}
+            {
+                "from_label": "reduces",
+                "field": "voice",
+                "equals": "reported",
+                "to_label": "implicit",
+            }
         ],
         "providers": ["gemini"],
         "profile": "economy",
