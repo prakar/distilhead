@@ -46,6 +46,16 @@ teacher:
   prompt_file: prompt.md
   prompt_version: '0.7'
   evidence_quote: required
+  output:
+    list_key: categories
+    id_key: id
+    label_key: stance
+    quote_key: evidence_quote
+  demote:
+  - from_label: reduces
+    field: voice
+    equals: reported
+    to_label: implicit
   providers:
   - gemini
   profile: economy

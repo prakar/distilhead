@@ -96,3 +96,28 @@ def extrapolate(measured_usd: float, n_measured: int, n_total: int) -> float:
     if n_measured <= 0:
         raise ValueError("need at least one measured item")
     return measured_usd / n_measured * n_total
+
+
+# USD per 1M tokens (input, output). Taken from memory of the public price list, NOT verified:
+# check against your provider's current pricing before trusting a cap. Thinking tokens bill as output.
+PRICES_PER_M = {
+    "gemini-2.5-flash": (0.30, 2.50),
+    "gemini-2.5-flash-lite": (0.10, 0.40),
+    "gemini-2.0-flash": (0.10, 0.40),
+}
+
+
+def price_for(model: str, env) -> tuple[float, float]:
+    """Env DISTILHEAD_PRICE_IN_PER_M / DISTILHEAD_PRICE_OUT_PER_M override the table. Unknown model: refuse."""
+    a, b = env.get("DISTILHEAD_PRICE_IN_PER_M"), env.get("DISTILHEAD_PRICE_OUT_PER_M")
+    if a and b:
+        return float(a), float(b)
+    if model in PRICES_PER_M:
+        return PRICES_PER_M[model]
+    raise CapRefused(
+        f"no price known for model {model!r}: set DISTILHEAD_PRICE_IN_PER_M and _OUT_PER_M"
+    )
+
+
+def call_cost(price: tuple[float, float], tokens_in: int, tokens_out: int) -> float:
+    return (tokens_in * price[0] + tokens_out * price[1]) / 1e6

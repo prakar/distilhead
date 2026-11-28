@@ -3,6 +3,8 @@
 from __future__ import annotations
 
 import argparse
+import json
+import os
 import sys
 from pathlib import Path
 
@@ -27,6 +29,53 @@ def _check_core(repo: Path, denylists: list[Path]) -> int:
         print(f"FAIL domain string {h}", file=sys.stderr)
     print("core clean" if not hits else f"{len(hits)} hit(s)")
     return 1 if hits else 0
+
+
+def _label(a) -> int:
+    from .guard import cost, teacher
+    from .label import run as lrun
+
+    env = dict(os.environ)
+    pk = load_pack(a.pack)
+    if a.dry_run:
+        model = "gemini-2.5-flash"
+        price = cost.price_for(model, env)
+        print(lrun.dry_run(a.pack, a.out, price, a.cap_usd or pk.teacher.cap_usd, model))
+        return 0
+    key = env.get("GEMINI_API_KEY")
+    if not key:
+        raise RuntimeError(
+            "GEMINI_API_KEY not set (source ~/.secrets); never pass keys on the command line"
+        )
+    env["DISTILHEAD_PROVIDER_KEY"] = key
+    env.setdefault("LLM_MODEL_RESOLVER_PROFILE", "economy")
+    cleared = teacher.clear_teacher(
+        a.pack, "gemini", env, a.out / "label" / "cost_ledger.jsonl", a.cap_usd
+    )
+    if a.raise_cap is not None:
+        cleared.ledger.raise_cap(a.raise_cap, env.get("USER", "owner"), a.reason)
+    client = teacher.create_client(cleared, key)
+    s = lrun.run_label(a.pack, a.out, cleared, client.generate, env, continue_full=a.cont)
+    print(json.dumps(s, indent=2))
+    if not a.cont:
+        print(
+            "pilot done. Check the measured cost above, then re-run with --continue for the rest."
+        )
+    return 1 if s["stopped_by_cap"] else 0
+
+
+def _gate(a) -> int:
+    from .eval import harness
+    from .label import run as lrun
+
+    pk = load_pack(a.pack)
+    man = json.loads((a.out / "label" / "manifest.json").read_text())
+    model = man["params"]["model"]
+    preds = lrun.write_predictions(a.pack, a.out, model)
+    rep = harness.run_eval(a.pack, preds, a.out, step="gate", purpose="gate")
+    print(harness.format_report(rep))
+    print(f"teacher {model}  prompt {lrun.prompt_sha(a.pack, pk)[:12]}")
+    return 0 if rep["bar_pass"] else 1
 
 
 def main(argv: list[str] | None = None) -> int:
@@ -61,6 +110,25 @@ def main(argv: list[str] | None = None) -> int:
     ev.add_argument("--out", type=Path, default=Path("out"))
     ev.add_argument("--require-pass", action="store_true", help="exit 1 if the bar fails")
 
+    lb = sub.add_parser("label", help="teacher labels held-out texts (pilot first; spends money)")
+    lb.add_argument("pack", type=Path)
+    lb.add_argument("--out", type=Path, default=Path("out"))
+    lb.add_argument(
+        "--dry-run", action="store_true", help="print call count and estimate; no calls"
+    )
+    lb.add_argument(
+        "--continue", dest="cont", action="store_true", help="after the pilot: label the rest"
+    )
+    lb.add_argument("--cap-usd", type=float, default=None, help="can only lower the cap")
+    lb.add_argument("--raise-cap", type=float, default=None)
+    lb.add_argument("--reason", default="", help="required with --raise-cap")
+
+    gt = sub.add_parser(
+        "gate", help="teacher-ceiling: score the teacher's labels under the frozen bar"
+    )
+    gt.add_argument("pack", type=Path)
+    gt.add_argument("--out", type=Path, default=Path("out"))
+
     a = ap.parse_args(argv)
     try:
         if a.cmd == "pack-validate":
@@ -78,6 +146,10 @@ def main(argv: list[str] | None = None) -> int:
             rep = harness.run_eval(a.pack, a.predictions, a.out)
             print(harness.format_report(rep))
             return 1 if (a.require_pass and not rep["bar_pass"]) else 0
+        if a.cmd == "label":
+            return _label(a)
+        if a.cmd == "gate":
+            return _gate(a)
         if a.cmd == "run":
             if _validate(a.pack):
                 return 1

@@ -67,11 +67,13 @@ def check_bar(bar: Bar, overall: dict, table: dict) -> list[dict]:
     return results
 
 
-def run_eval(root: Path, predictions: Path, out: Path) -> dict:
+def run_eval(
+    root: Path, predictions: Path, out: Path, step: str = "eval", purpose: str = "eval"
+) -> dict:
     bar_hash = barlock.verify(root)  # refuses if bar.yaml changed since lock
     pack = load_pack(root)
     bar = Bar.model_validate(load_yaml(root / pack.files.bar))
-    ref = heldout.read_reference(root, pack, out, purpose="eval")
+    ref = heldout.read_reference(root, pack, out, purpose=purpose)
     locks = heldout.read_locks(root, pack)
     cells, locked = build_cells(pack, ref, locks, read_predictions(predictions))
     overall = metrics.compute(cells, pack)
@@ -86,14 +88,14 @@ def run_eval(root: Path, predictions: Path, out: Path) -> dict:
         "bar_results": results,
         "bar_pass": all(r["pass"] for r in results),
     }
-    d = out / "eval"
+    d = out / step
     d.mkdir(parents=True, exist_ok=True)
     (d / "report.json").write_text(json.dumps(report, indent=2, sort_keys=True) + "\n")
     touches = (out / heldout.TOUCH_LOG).read_text().count("\n")
     write_manifest(
         out,
         build_manifest(
-            "eval",
+            step,
             "complete",
             {"id": pack.pack.id, "version": pack.pack.version, "hash": bar_hash},
             inputs=[
