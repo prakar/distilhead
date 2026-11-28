@@ -51,7 +51,8 @@ def test_bad_cap_refused(toy, tmp_path):
         teacher.clear_teacher(toy, "gemini", ENV, tmp_path / "l.jsonl", cap_usd=0, resolver=res())
 
 
-def test_client_not_created_in_step_0(toy, tmp_path):
+def test_no_client_for_unsupported_provider(toy, tmp_path):
     c = teacher.clear_teacher(toy, "gemini", ENV, tmp_path / "l.jsonl", resolver=res())
+    other = teacher.Cleared(c.model.__class__("other", "m", "economy", None), c.ledger)
     with pytest.raises(NotImplementedError):
-        teacher.create_client(c)
+        teacher.create_client(other, "k")

@@ -1,0 +1,58 @@
+locks:
+- id: dhammapada_1
+  cells:
+  - item: dhammapada_1
+    dimension: essence_form
+  - item: dhammapada_1
+    dimension: substance_accident
+  - item: dhammapada_1
+    dimension: act_potency
+  - item: dhammapada_1
+    dimension: final_cause
+  - item: dhammapada_1
+    dimension: formal_cause
+  - item: dhammapada_1
+    dimension: soul_form_of_body
+  - item: dhammapada_1
+    dimension: first_cause
+  - item: dhammapada_1
+    dimension: hierarchy_of_being
+  reason: owner-decided call (2026-11-25)
+- id: machiavelli_prince_17
+  cells:
+  - item: machiavelli_prince_17
+    dimension: essence_form
+  - item: machiavelli_prince_17
+    dimension: final_cause
+  - item: machiavelli_prince_17
+    dimension: hierarchy_of_being
+  - item: machiavelli_prince_17
+    dimension: act_potency
+  - item: machiavelli_prince_17
+    dimension: soul_form_of_body
+  reason: owner-decided call (2026-11-25)
+- id: friedman_1970
+  cells:
+  - item: friedman_1970
+    dimension: final_cause
+  - item: friedman_1970
+    dimension: hierarchy_of_being
+  - item: friedman_1970
+    dimension: essence_form
+  - item: friedman_1970
+    dimension: substance_accident
+  - item: friedman_1970
+    dimension: formal_cause
+  reason: owner-decided call (2026-11-25)
+- id: mill_on_liberty_1
+  cells:
+  - item: mill_on_liberty_1
+    dimension: final_cause
+  - item: mill_on_liberty_1
+    dimension: hierarchy_of_being
+  reason: owner-decided call (2026-11-25)
+- id: nietzsche_gs_125
+  cells:
+  - item: nietzsche_gs_125
+    dimension: first_cause
+  reason: owner-decided call (2026-11-25)

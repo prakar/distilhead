@@ -42,6 +42,24 @@ class LabelSet(_M):
     polarity: Polarity
 
 
+class TeacherOutput(_M):
+    """Where the teacher's JSON puts per-dimension readings. Names are pack data, not core."""
+
+    list_key: str = "items"
+    id_key: str = "id"
+    label_key: str = "label"
+    quote_key: str = "quote"
+
+
+class Demotion(_M):
+    """If a reading has label `from_label` and field `field` equals `equals`, relabel it `to_label`."""
+
+    from_label: str
+    field: str
+    equals: str
+    to_label: str
+
+
 class Teacher(_M):
     prompt_file: str
     prompt_version: str
@@ -49,6 +67,8 @@ class Teacher(_M):
     providers: list[str] = ["gemini"]
     profile: Literal["economy"] = "economy"
     cap_usd: float = 5.0
+    output: TeacherOutput = TeacherOutput()
+    demote: list[Demotion] = []
 
     @model_validator(mode="after")
     def _cap(self):
