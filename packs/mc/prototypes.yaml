@@ -1,0 +1,88 @@
+essence_form:
+  affirms:
+  - Appeals to what something is by nature ('human nature', 'a person is not a thing',
+    'what a family is').
+  implicit:
+  - Argues as if kinds have fixed natures without using the word (e.g. 'you cannot
+    treat a child like that').
+  silent:
+  - Treats entities only by attributes, function or preference; what kind of thing
+    it is never arises.
+  reduces:
+  - Says or assumes kinds are arbitrary labels, social constructs, or 'nothing but'
+    their parts, data or inputs.
+substance_accident:
+  affirms:
+  - Separates enduring identity from change ('still the same person', 'a role is not
+    who you are').
+  implicit:
+  - Presupposes identity under change (promises, duties, responsibility across time).
+  silent:
+  - No concern with identity versus change.
+  reduces:
+  - Identity dissolved into attributes, profile, behaviour or data ('you are your
+    preferences / metrics').
+act_potency:
+  affirms:
+  - '''Potential'', ''flourishing'', ''becoming what one is'', maturation as realisation.'
+  implicit:
+  - Judges harm or benefit by whether a being's development is enabled or blocked.
+  silent:
+  - Only states or outcomes; no developmental direction.
+  reduces:
+  - Potential treated as a projection or a resource to monetise; development as arbitrary
+    self-construction.
+final_cause:
+  affirms:
+  - Names intrinsic purposes ('the point of medicine', 'what a university is for',
+    'the good of').
+  implicit:
+  - Evaluates a practice by whether it fulfils its own end.
+  silent:
+  - Means, costs and outputs only; ends never questioned.
+  reduces:
+  - Ends declared arbitrary or merely chosen; only optimisation, efficiency, engagement
+    or growth as the goal.
+formal_cause:
+  affirms:
+  - Appeals to form or organisation as what makes a thing this thing ('the body as
+    a living whole', 'what makes it a marriage').
+  implicit:
+  - Treats organisation as explanatory beyond the components.
+  silent:
+  - No account of what makes the thing what it is.
+  reduces:
+  - '''Just atoms / neurons / code / inputs''; explanation exhausted by material parts
+    and efficient mechanism.'
+soul_form_of_body:
+  affirms:
+  - Embodied personhood, 'whole person', dignity of the body, soul or mind as the
+    life of the body.
+  implicit:
+  - Treats bodily integrity and personhood as inseparable.
+  silent:
+  - No view of the person.
+  reduces:
+  - Body as property, hardware or raw material; mind as software or transferable;
+    person split into separable parts for use.
+hierarchy_of_being:
+  affirms:
+  - Dignity, persons as ends not means, higher and lower goods stated explicitly.
+  implicit:
+  - Treats some things as not tradable or beyond calculation.
+  silent:
+  - No ranking of kinds or goods.
+  reduces:
+  - 'Flat equivalence: everything commensurable, tradable, a resource; all preferences
+    equal.'
+first_cause:
+  affirms:
+  - Appeals to creation, providence, Logos, ground of being, the Absolute, or an ordered
+    cosmos (rta).
+  implicit:
+  - Presupposes reality is intelligible and ordered by something prior to human construction.
+  silent:
+  - No ultimate grounding either way.
+  reduces:
+  - Reality or meaning as brute fact or human construction ('we make our own meaning');
+    intelligence or value as emergent from scale or complexity alone.

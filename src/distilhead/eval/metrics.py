@@ -5,6 +5,7 @@ side(label): 'A' / 'B' if the label is in the first / second opposed group, else
   same_side  side(candidate) == side(reference)   (exact implies same_side)
   reversal   {side(candidate), side(reference)} == {'A', 'B'}
   coverage   candidate is not the label set's abstain label (1.0 when no abstain declared)
+  cand_only / ref_only   counts of cells addressed by only one side (abstain vs non-abstain)
 All metrics are computed over counted (non-locked) cells.
 """
 
@@ -45,12 +46,22 @@ def _covered(c: Cell, ls: LabelSet) -> bool:
     return ls.abstain is None or c.candidate != ls.abstain
 
 
+def _cand_only(c: Cell, ls: LabelSet) -> bool:
+    return ls.abstain is not None and c.reference == ls.abstain and c.candidate != ls.abstain
+
+
+def _ref_only(c: Cell, ls: LabelSet) -> bool:
+    return ls.abstain is not None and c.candidate == ls.abstain and c.reference != ls.abstain
+
+
 # name -> (per-cell predicate, kind). 'count' metrics report an integer, 'rate' a fraction.
 REGISTRY = {
     "exact": (_exact, "rate"),
     "same_side": (_same_side, "rate"),
     "reversals": (_reversal, "count"),
     "coverage": (_covered, "rate"),
+    "cand_only": (_cand_only, "count"),  # candidate addresses a cell the reference leaves silent
+    "ref_only": (_ref_only, "count"),  # reference addresses a cell the candidate leaves silent
 }
 
 

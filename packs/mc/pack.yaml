@@ -1,0 +1,74 @@
+schema_version: 1
+pack:
+  id: mc
+  version: 0.1.0
+  licence: per-source
+dimensions:
+- id: essence_form
+  definition: Does the text treat what it speaks about (persons, bodies, institutions, nature) as a determinate kind of thing whose nature limits what may rightly be done with it?
+  label_set: stance
+- id: substance_accident
+  definition: Does the text distinguish what a thing is (persisting identity) from its changeable properties or roles?
+  label_set: stance
+- id: act_potency
+  definition: Does the text speak of real potentials that can be realised or frustrated (growth, flourishing, development), not only of preferences or outcomes?
+  label_set: stance
+- id: final_cause
+  definition: Does the text ask what things are for and judge by ends intrinsic to them, not only by ends we assign?
+  label_set: stance
+- id: formal_cause
+  definition: Does the text treat what something is as more than its material and mechanism, i.e. as matter organised by a form?
+  label_set: stance
+- id: soul_form_of_body
+  definition: Does the text treat the person as one embodied living unity, neither a ghost in a machine nor a machine?
+  label_set: stance
+- id: hierarchy_of_being
+  definition: Does the text recognise a real ordering among kinds of beings or goods (persons over things, higher over lower goods)?
+  label_set: stance
+- id: first_cause
+  definition: 'Does the text ground reality or value in something beyond the world''s own mechanisms: a source, Logos, ground of being?'
+  label_set: stance
+label_sets:
+  stance:
+    kind: categorical
+    labels:
+    - affirms
+    - implicit
+    - silent
+    - reduces
+    abstain: silent
+    polarity:
+      opposed:
+      - - affirms
+        - implicit
+      - - reduces
+teacher:
+  prompt_file: prompt.md
+  prompt_version: '0.7'
+  evidence_quote: required
+  providers:
+  - gemini
+  profile: economy
+  cap_usd: 5
+files:
+  corpus: corpus.yaml
+  heldout: heldout.yaml
+  reference: reference.jsonl
+  locks: locks.yaml
+  prototypes: prototypes.yaml
+  bar: bar.yaml
+  denylist: denylist.txt
+encoder:
+  id: TBD-owner-to-pick
+  revision: '0000000000000000000000000000000000000000'
+  sha256: '0000000000000000000000000000000000000000000000000000000000000000'
+  max_len: 512
+  pooling: mean
+head:
+  type: logreg
+  class_weight: balanced
+  seed: 0
+  c_grid:
+  - 0.1
+  - 1.0
+  - 10.0

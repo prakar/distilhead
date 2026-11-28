@@ -1,0 +1,17 @@
+# Domain tokens of the first real pack. Core must never contain these. Trailing * = stem.
+stance
+affirms
+reduces
+essence
+hierarchy
+Aristotel*
+Thomis*
+ethics
+moral
+QHE
+Harrington
+Fluttering
+Aquinas
+Thomophob*
+hylomorph*
+telos

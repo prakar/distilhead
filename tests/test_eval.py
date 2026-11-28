@@ -31,6 +31,7 @@ def test_metrics_polarity(toy):
     assert m["exact"] == 0.5
     assert m["same_side"] == 0.5  # neutral vs negative is mid vs A: different side, not a reversal
     assert m["coverage"] == 0.5  # neutral is the abstain label
+    assert m["cand_only"] == 0 and m["ref_only"] == 1  # neutral vs negative: reference-only
 
 
 def test_eval_perfect_and_locked_excluded(toy, tmp_path):

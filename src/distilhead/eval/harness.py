@@ -126,6 +126,9 @@ def format_report(r: dict) -> str:
         f"{'OVERALL':<16}{r['cells_counted']:>6}{o['exact']:>8.2f}{o['same_side']:>11.2f}"
         f"{int(o['reversals']):>11}{o['coverage']:>10.2f}"
     )
+    lines.append(
+        f"addressed by candidate only {int(o['cand_only'])}, by reference only {int(o['ref_only'])}"
+    )
     for b in r["bar_results"]:
         lines.append(
             f"bar {b['scope']} {b['metric']} {b['op']} {b['value']}: {b['actual']:.3g} {'PASS' if b['pass'] else 'FAIL'}"
