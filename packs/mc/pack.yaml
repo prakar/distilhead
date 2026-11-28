@@ -59,7 +59,7 @@ files:
   bar: bar.yaml
   denylist: denylist.txt
 encoder:
-  id: TBD-owner-to-pick
+  id: BAAI/bge-small-en-v1.5
   revision: '0000000000000000000000000000000000000000'
   sha256: '0000000000000000000000000000000000000000000000000000000000000000'
   max_len: 512

@@ -43,6 +43,8 @@ class EncoderEmbedder:
     """UNTESTED here (no weights offline). Pinned by pack.encoder revision."""
 
     def __init__(self, enc: Encoder):
+        if set(enc.revision) <= {"0"}:
+            raise RuntimeError("pack.encoder.revision is a placeholder: pin a real commit sha")
         try:
             from sentence_transformers import SentenceTransformer
         except ImportError as e:
