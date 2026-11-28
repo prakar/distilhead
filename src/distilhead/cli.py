@@ -6,7 +6,9 @@ import argparse
 import sys
 from pathlib import Path
 
-from . import barlock, checkcore
+from . import barlock, checkcore, zeroshot
+from .embed import embedders
+from .eval import harness
 from .manifest import build_manifest, sha256_file, write_manifest
 from .pack.validate import load_pack, validate
 
@@ -48,6 +50,17 @@ def main(argv: list[str] | None = None) -> int:
     run.add_argument("--out", type=Path, default=Path("out"))
     run.add_argument("--repo", type=Path, default=Path("."))
 
+    zs = sub.add_parser("zeroshot", help="nearest-prototype predictions on held-out ($0, no LLM)")
+    zs.add_argument("pack", type=Path)
+    zs.add_argument("--out", type=Path, default=Path("out"))
+    zs.add_argument("--embedder", choices=["hash", "encoder"], default="encoder")
+
+    ev = sub.add_parser("eval", help="score predictions on held-out under the frozen bar")
+    ev.add_argument("pack", type=Path)
+    ev.add_argument("--predictions", type=Path, required=True)
+    ev.add_argument("--out", type=Path, default=Path("out"))
+    ev.add_argument("--require-pass", action="store_true", help="exit 1 if the bar fails")
+
     a = ap.parse_args(argv)
     try:
         if a.cmd == "pack-validate":
@@ -57,6 +70,14 @@ def main(argv: list[str] | None = None) -> int:
             return 0
         if a.cmd == "check-core":
             return _check_core(a.repo, a.denylist)
+        if a.cmd == "zeroshot":
+            pk = load_pack(a.pack)
+            print(zeroshot.predict(a.pack, embedders.load(a.embedder, pk.encoder), a.out))
+            return 0
+        if a.cmd == "eval":
+            rep = harness.run_eval(a.pack, a.predictions, a.out)
+            print(harness.format_report(rep))
+            return 1 if (a.require_pass and not rep["bar_pass"]) else 0
         if a.cmd == "run":
             if _validate(a.pack):
                 return 1
