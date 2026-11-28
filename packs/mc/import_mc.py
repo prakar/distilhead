@@ -81,7 +81,7 @@ pack = {
     "files": {"corpus": "corpus.yaml", "heldout": "heldout.yaml", "reference": "reference.jsonl",
               "locks": "locks.yaml", "prototypes": "prototypes.yaml", "bar": "bar.yaml",
               "denylist": "denylist.txt"},
-    "encoder": {"id": "TBD-owner-to-pick", "revision": "0" * 40, "sha256": "0" * 64,
+    "encoder": {"id": "BAAI/bge-small-en-v1.5", "revision": "0" * 40, "sha256": "0" * 64,
                 "max_len": 512, "pooling": "mean"},
     "head": {"type": "logreg", "class_weight": "balanced", "seed": 0, "c_grid": [0.1, 1.0, 10.0]},
 }
