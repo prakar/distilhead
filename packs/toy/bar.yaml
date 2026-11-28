@@ -1,0 +1,4 @@
+thresholds:
+  - {metric: reversals, op: "<=", value: 0}
+  - {metric: same_side, op: ">=", value: 0.8}
+scope: all non-locked cells

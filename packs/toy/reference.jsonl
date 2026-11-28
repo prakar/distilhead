@@ -1,0 +1,6 @@
+{"item": "h1", "dimension": "sentiment", "label": "positive"}
+{"item": "h1", "dimension": "urgency", "label": "low"}
+{"item": "h2", "dimension": "sentiment", "label": "negative"}
+{"item": "h2", "dimension": "urgency", "label": "high"}
+{"item": "h3", "dimension": "sentiment", "label": "neutral"}
+{"item": "h3", "dimension": "urgency", "label": "low"}

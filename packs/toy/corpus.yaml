@@ -1,0 +1,7 @@
+sources:
+  - {id: toy-authored, licence: MIT}
+items:
+  - {id: c1, source: toy-authored, text: "The delivery arrived early and everything works great."}
+  - {id: c2, source: toy-authored, text: "This is broken again and nobody answers my messages."}
+  - {id: c3, source: toy-authored, text: "The meeting is on the calendar for next month."}
+  - {id: c4, source: toy-authored, text: "Server is down, customers are waiting, fix it now."}

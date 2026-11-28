@@ -1,0 +1,2 @@
+locks:
+  - {id: example-lock, cells: [{item: h3, dimension: urgency}], reason: "demonstrates the generic lock mechanism"}

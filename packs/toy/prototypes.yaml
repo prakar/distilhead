@@ -1,0 +1,8 @@
+sentiment:
+  negative: ["This is awful and I am upset."]
+  neutral: ["The item is in the folder."]
+  positive: ["This is wonderful and I am pleased."]
+urgency:
+  low: ["Whenever you have time."]
+  medium: ["Please reply this week."]
+  high: ["Do this right now."]
